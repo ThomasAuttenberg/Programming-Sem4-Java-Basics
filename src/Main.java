@@ -1,15 +1,12 @@
-import Models.HabitatModel;
-import Views.HabitatView;
+import Models.Habitat;
+import Views.WindowView;
 
-import javax.imageio.ImageIO;
-import javax.imageio.stream.ImageInputStream;
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
 
 public class Main {
     public static void main(String[] args) {
-        HabitatView view = new HabitatView(new HabitatModel());
+        WindowView view = new WindowView(new Habitat().getComponents());
 
         JPanel panel = new JPanel();
         panel.setBackground(Color.BLUE);

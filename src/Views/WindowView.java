@@ -1,19 +1,16 @@
 package Views;
 
-import Models.HComponent;
-import Models.HabitatModel;
-
 import javax.swing.*;
 import java.awt.*;
 
-public class HabitatView extends JPanel {
+public class WindowView extends JFrame {
     JComponent[] components;
 
     {
         setBackground(Color.BLUE);
     }
 
-    public HabitatView(JComponent[] components){
+    public WindowView(JComponent[] components){
         this.components = components;
     }
 

@@ -14,6 +14,7 @@ public class Habitat extends JPanel {
     private long lastUpdateTime = -1;
 
     {
+        this.setBackground(Color.BLUE);
         stats = new StatisticsModel();
         generatingTypes = new HashSet<Entity>();
         enteties = new ArrayList<Entity>();
@@ -47,8 +48,13 @@ public class Habitat extends JPanel {
 
     }
 
+    public void addGeneratingType(Entity typeToGenerate){
+        generatingTypes.add(typeToGenerate);
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+       // g.drawImage();
     }
 }

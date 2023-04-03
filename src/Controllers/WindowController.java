@@ -12,7 +12,7 @@ public class WindowController {
    private final int timerDelay = 0;
    private final int timerPeriod = 1000;
    public final Date simulationBeginDate;
-   Habitat habitat = new Habitat();
+    Habitat habitat = new Habitat();
 
     {
 

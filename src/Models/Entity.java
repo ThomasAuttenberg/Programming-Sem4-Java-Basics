@@ -18,8 +18,7 @@ public abstract class Entity extends JComponent {
     private double frequency = 0;
 
 
-    protected Entity(int x, int y, int width, int height){
-        this.setLocation(x,y);
+    protected Entity(int width, int height){
         this.width = width;
         this.height = height;
     }

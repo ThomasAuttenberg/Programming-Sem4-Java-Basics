@@ -9,13 +9,13 @@ public class GoldFish extends Entity {
         this.setGenerationTime(2000);
         this.setImageURL("src/res/goldfish.png");
     }
-    GoldFish(int x, int y, int width, int height){
-        super(x,y,width,height);
+    public GoldFish(int width, int height){
+        super(width,height);
     }
 
     @Override
     protected Entity clone() {
-        GoldFish copy = new GoldFish(this.getX(), this.getY(), this.width, this.height);
+        GoldFish copy = new GoldFish(this.width, this.height);
         return copy;
     }
 }

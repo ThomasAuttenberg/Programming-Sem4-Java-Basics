@@ -1,31 +1,22 @@
 package Models;
 
 import javax.swing.*;
-import java.sql.Time;
+import java.awt.*;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
 
 
 public class Habitat extends JPanel {
     private ArrayList<Entity> enteties;
+    private StatisticsModel stats;
     private HashSet<Entity> generatingTypes;
-    private HashMap<StatisticKeys, Integer> statistics;
+    //private HashMap<StatisticKeys, Integer> statistics;
     private long lastUpdateTime = -1;
-    public enum StatisticKeys{
-        SIMULATION_TIME,
-        GUPPIE_NUM,
-        GOLDGFISH_NUM;
-    }
 
     {
+        stats = new StatisticsModel();
         generatingTypes = new HashSet<Entity>();
         enteties = new ArrayList<Entity>();
-    }
-
-    public int getStatistics(StatisticKeys key) {
-        return statistics.get(key);
     }
 
     public ArrayList<Entity> getEnteties(){
@@ -33,6 +24,7 @@ public class Habitat extends JPanel {
     }
 
     public void update(long simulationTime){
+
         if(lastUpdateTime == -1) lastUpdateTime = simulationTime;
         long lastUpdateDifference = lastUpdateTime - simulationTime;
 
@@ -40,16 +32,23 @@ public class Habitat extends JPanel {
             type.getFrequency();
             if(type.getGenerationTime() <= lastUpdateDifference){
                 if(type.getFrequency() >= 1.0){
-                    enteties.add(new type.getClass());
+                    Entity newEntity = type.clone();
                 }else{
-
+                    double rand = Math.random();
+                    if(type.getFrequency() <= rand){
+                        Entity newEntity = type.clone();
+                        this.add(newEntity);
+                        stats.instancesCounter.incrementInstance(type.getClass());
+                    }
                 }
-                double rand = Math.random();
 
             }
         }
 
     }
 
-
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+    }
 }

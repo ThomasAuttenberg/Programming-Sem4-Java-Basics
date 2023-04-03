@@ -12,12 +12,13 @@ public abstract class Entity extends JComponent {
     private int layer;
     //private URL imageURL;
     private BufferedImage img = null;
-    int width;
+    protected int width;
+    protected int height;
     private int generationTime = 2000;
     private double frequency = 0;
-    int height;
 
-    Entity(int x, int y, int width, int height){
+
+    protected Entity(int x, int y, int width, int height){
         this.setLocation(x,y);
         this.width = width;
         this.height = height;
@@ -58,4 +59,6 @@ public abstract class Entity extends JComponent {
             System.out.println("Can't load image" + imageURL == null ? ": incorrect URL" : " on "+imageURL);
         }
     }
+
+    protected abstract Entity clone();
 }

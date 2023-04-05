@@ -82,7 +82,7 @@ public class Habitat extends JPanel {
         generatingTypes.add(typeToGenerate);
         lastUpdate.put(typeToGenerate, 0L);
     }
-
+//
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

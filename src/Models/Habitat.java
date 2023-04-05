@@ -92,9 +92,9 @@ public class Habitat extends JPanel {
 
     public void stopSimulation(){
         for(Entity ent : entities){
-            entities.remove(ent);
             this.remove(ent);
         }
+        entities.clear();
         for(Entity type : generatingTypes){
             lastUpdate.put(type,0L);
         }

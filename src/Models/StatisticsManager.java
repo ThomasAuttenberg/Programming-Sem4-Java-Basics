@@ -4,9 +4,11 @@ import java.util.HashMap;
 
 
 
-public class StatisticsModel {
-    //HashSet stats;
+public class StatisticsManager {
     public InstancesCounter instancesCounter;
+    {
+        instancesCounter = new InstancesCounter();
+    }
 
     public class InstancesCounter{
         private HashMap<Class, Integer> instancesCounter;
@@ -33,4 +35,9 @@ public class StatisticsModel {
         }
 
     }
+
+    public void clear(){
+        instancesCounter = new InstancesCounter();
+    }
+
 }

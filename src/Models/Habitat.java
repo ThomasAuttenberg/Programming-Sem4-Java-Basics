@@ -12,21 +12,49 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 
+
+
+// Habitat - класс, представляющий собой все поле с рыбками (левая панель). Наследуется, по логике, от JPanel.
+// Хранит в себе рыбок в качестве компонентов
+
 public class Habitat extends JPanel {
-    private final ArrayList<Entity> entities;
-    private final StatisticsManager stats;
+    private final ArrayList<Entity> entities; // Список хранящихся существ (рыбок)
+    private final StatisticsManager stats; // Статистик-менеджер.
     private final HashSet<Entity> generatingTypes;
+    //    !!!!!!! Список уникальных (на самом деле надо переопределить еще hashCode и equals в наших объектах, чтобы HashSet действительно смотрел на уникальность)
+    // объектов. Habitat будет брать отсюда объекты и копировать их, создавая новый, такой же объект, если частота и время генерации подходят
+    // для генерации нового объекта. Одним словом, generatingTypes - список генерируемых типов
     private final HashMap<Entity, Long> lastUpdate;
+    // Когда вызовется update по таймеру, мы получим время симуляции. Отлично, вот только время симуляции ничего
+    // с математической точки зрения нам не даст. В прошлой версии лабораторной работы это все держалось на лютых костылях,
+    // и если немного где-то подредактировать время - все посыпется.
+    // Здесь мы используем карту (передаем объект из generatingTypes в качестве ключа - получаем время), который хранит последнее время, когда
+    // simulationTime >= entity.generationTime. Изначально там хранится 0.
+    // Ситуация: самый первый вызов update(). На вход подано значение 3154.
+    // У нас есть золотая рыбка с временем генерации 2000.
+    // Проверяем: 3154 >= 0 (время последнего обновления) + 2000(время генерации) => да! Ставим время последнего обновления раным 3154 - 3154%2000 = 2000
+    // В следующей итерации на вход подается 5680
+    // 5680 >= 2000 + 2000 => Да!!! Ставим время последнего обновления равным 5680 - 5680%2000 = 4000.
+    // Т.е. эта система нужна для того, чтобы все работало вне зависимости от времени обновления.
+    // Сейчас пока я это пишу, я понимаю, что это работает очень плохо и сложно, и если за время обновления должно
+    // было появиться несколько рыбок, появится только одна.
+    // в идеале систему надо немного поменять. Идеи приветствуются
+    //
 
 
     private BufferedImage backgroundImage;
 
     {
 
+        // Habitat - это все еще JPanel, потому что наследуется от нее,
+        // поэтому надо произвести первоначальную настройку.
 
-        this.setBackground(Color.BLUE);
-        this.setLayout(null);
-        generatingTypes = new HashSet<>();
+        this.setBackground(Color.BLUE); // можно убрать вроде
+
+        this.setLayout(null); // изначально ставится FlowLayout, он не позволяет использовать
+        // Абсолютное позиционирование. Обнуляем лэйаут менеджер.
+
+        generatingTypes = new HashSet<>(); // просто выделяем память под наши поля
         entities = new ArrayList<>();
         lastUpdate = new HashMap<>();
 
@@ -53,36 +81,46 @@ public class Habitat extends JPanel {
     public void update(long simulationTime){
 
 
-        for(Entity type : generatingTypes){
-            if(simulationTime - lastUpdate.get(type) >= type.getGenerationTime()){
-                lastUpdate.put(type, simulationTime);
-                if(type.getFrequency() >= 1.0){
-                    Entity newEntity = type.clone();
-                    entities.add(newEntity);
-                    this.add(newEntity);
+        for(Entity type : generatingTypes){ // для каждого type из generatingTypes.
+            if(simulationTime - lastUpdate.get(type) >= type.getGenerationTime()){ //если время симуляции >= время генерации типа + время последнего обновления
+                lastUpdate.put(type, simulationTime - simulationTime%type.getGenerationTime()); // устанавливаем время последнего обновления
+
+                // Это необязательно, можно убрать
+                /*  if(type.getFrequency() >= 1.0){ // Частота может быть установлена в качестве 1 или больше, т.е. гарантированная генерация
+                    Entity newEntity = type.clone(); // клонируем объект
+                    entities.add(newEntity); // добавляем в массив объектов
+                    this.add(newEntity); // добавляем в качестве компонента JPanel
                 }else{
-                    double rand = Math.random();
-                    if(rand<=type.getFrequency()){
-                        Entity newEntity = type.clone();
-                        newEntity.setLocation((int)(Math.random()*(this.getWidth()+1)),(int)(Math.random()*(this.getHeight()+1)));
-                        this.add(newEntity);
-                        entities.add(newEntity);
-                        System.out.println("REVALIDATION");
-                        stats.instancesCounter.incrementInstance(type.getClass());
-                    }
+
+               */
+                    double rand = Math.random();  // Получаем ранд число в полуинтервале [0;1)
+                    if(rand<=type.getFrequency()){ // если оно меньше, чем частота появления
+                        Entity newEntity = type.clone(); // Клонируем объект
+                        newEntity.setLocation((int)(Math.random()*(this.getWidth()+1)),(int)(Math.random()*(this.getHeight()+1))); // Устанавливаем его локацию случайным образом
+                        this.add(newEntity); //добавляем как компонент JPanel
+                        entities.add(newEntity); // добавляем в список объектов Habitat
+                        System.out.println("REVALIDATION"); // просто логирование для себя делал
+                        stats.instancesCounter.incrementInstance(type.getClass()); // Вызываем счетчик объектов менеджера статистики, передаем класс объекта
+                        // Счетчик объектов этого типа увеличится на 1.
+                        // (Возможный баг: если мы будем передавать модифицированные типы с разными значениями полей, он также будет считать их как объект одного класса)
                 }
 
             }
         }
-       this.repaint();
+       this.repaint(); // На каждом обновлении перерисовываем JPanel. Просто потому что это логично
     }
 
-    public void addGeneratingType(Entity typeToGenerate)
+    public void addGeneratingType(Entity typeToGenerate) // метод добавляет хабитату тип для генерации
     {
         generatingTypes.add(typeToGenerate);
         lastUpdate.put(typeToGenerate, 0L);
     }
-//
+
+    public HashSet<Entity> getGeneratingTypes(){
+        return generatingTypes;
+    }
+
+    // Переопределяем метод paintComponent JPanel, отрисовывая фоновую картинку.
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -90,17 +128,27 @@ public class Habitat extends JPanel {
             g.drawImage(backgroundImage,0,0,this.getWidth(),this.getHeight(), null);
     }
 
+    // Метод остановки симуляции. Удаление всех компонентов.
     public void stopSimulation(){
         for(Entity ent : entities){
             this.remove(ent);
         }
-        entities.clear();
-        for(Entity type : generatingTypes){
+        // Можно было бы просто поменять весь цикл на this.removeAll(), но мы не можем гарантировать, что необходимо удалить ВСЕ элементы Habitat.
+        // Поэтому удаляем только сущности (Рыбок)
+
+        entities.clear(); // очищаем список объектов
+
+
+        // Ниже избыточный блок. Закомментирован.
+
+        /*for(Entity type : generatingTypes){ //очищаем карту времени последнего обновления
             lastUpdate.put(type,0L);
         }
+        //*/
+        //
     }
     public void startSimulation(){
-        for(Entity type : generatingTypes){
+        for(Entity type : generatingTypes){ //подготовка симуляции - расставляем нули в карте последних обновлений
             lastUpdate.put(type,0L);
         }
     }

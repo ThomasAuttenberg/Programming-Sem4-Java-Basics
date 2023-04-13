@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/__Java_Basics__Event_handling_and_delegating.iml" filepath="$PROJECT_DIR$/__Java_Basics__Event_handling_and_delegating.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Java_Basics__GUI.iml" filepath="$PROJECT_DIR$/Java_Basics__GUI.iml" />
     </modules>
   </component>
 </project>

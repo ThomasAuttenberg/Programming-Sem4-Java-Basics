@@ -9,26 +9,28 @@ import java.util.TimerTask;
 import java.util.Timer;
 
 public class WindowModel {
-    private Habitat habitat;
-    StatisticsManager stats;
-    private JPanel controlPanel;
-    private long simulationBeginTime = -1;
+    private Habitat habitat; // Храним Habitat
+    StatisticsManager stats; // Храним stats
+    private JPanel controlPanel; // Храним controlPanel - правую панель окна
+    private long simulationBeginTime = -1; // Время начала симуляции
 
-    private int timerDelay = 0;
+    private int timerDelay = 0; // Задаем начальные условия - задержка таймера и период обновления
     private int timerPeriod = 1000;
     private Timer timer;
 
     {
 
+        // Создаем менеджер статистики, Habitat и controlPanel
         stats = new StatisticsManager();
         habitat = new Habitat(stats, "res/HabitatBackground.png");
-        habitat.addGeneratingType(new GoldFish(100,100));
+        habitat.addGeneratingType(new GoldFish(100,100)); //добавляем типы для генерации
         habitat.addGeneratingType(new Guppie(50,50));
         controlPanel = new JPanel();
 
     }
 
 
+    // Простейшие геттеры
     public JPanel getControlPanel(){
         return controlPanel;
     }
@@ -43,22 +45,23 @@ public class WindowModel {
         return simulationBeginTime;
     }
 
-    public void startSimulation(long simulationBeginTime) {
-        habitat.revalidate();
-        this.simulationBeginTime = simulationBeginTime;
-        habitat.startSimulation();
-        stats.clear();
-        createTimer();
+    public void startSimulation(long simulationBeginTime) { //Старт симуляции:
+        habitat.revalidate(); //ревалидейт - служебный метод Swing. Необходимо вызывать каждый раз, когда удаляются объекты.
+        // скорее всего, мы запустим симуляцию после предыдущей симуляции - когда мы уже удалили кучу рыб
+        this.simulationBeginTime = simulationBeginTime; // выставляем время начала симуляции
+        habitat.startSimulation(); // запускаем симуляцию у Habitat
+        stats.clear(); // очищаем менеджер статистики - внутренний метод
+        createTimer(); // создаем таймер. см. ниже
     }
 
-    public void stopSimulation(){
-        timer.cancel();
-        this.simulationBeginTime = -1;
-        habitat.stopSimulation();
+    public void stopSimulation(){ //Остановка симуляции: (не пауза)
+        timer.cancel(); // прекращаем таймер
+        this.simulationBeginTime = -1; // время начала симуляции в минус один.
+        habitat.stopSimulation(); // останавливаем симуляцию Habitat
         //this.getStatisticsManager().clear();
     }
 
-    public void createTimer(){
+    public void createTimer(){ // Запуск таймера
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             public void run(){

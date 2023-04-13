@@ -16,16 +16,18 @@ public abstract class Entity extends JComponent {
 
 
     protected Entity(int width, int height){
-        this.width = width;
+        this.width = width; //Устанавливаем размеры рыбки
         this.height = height;
-        this.setSize(width,height);
+        this.setSize(width,height); //Подгоняем под них размер компонента.
     }
 
     public void setFrequency(double frequency) {
-        if(frequency < 0) throw new IllegalArgumentException();
-        this.frequency = frequency;
+        // Установка частоты появления рыбки
+        if(frequency < 0) throw new IllegalArgumentException(); // на вход подали ненормальное число - бросаем исключение
+        this.frequency = frequency; //устанавливаем частоту
     }
 
+    // Дальше тоже простые геттеры сеттеры
     public void setGenerationTime(int generationTime) {
         this.generationTime = generationTime;
     }
@@ -38,13 +40,15 @@ public abstract class Entity extends JComponent {
         return generationTime;
     }
 
+
+    // Переопределяем paintComponent функцию JComponent. Отвечает за отрисовку компонента.
     @Override
     protected void paintComponent(Graphics g) {
         //super.paintComponent(g);
         if (img != null) {
-            Graphics n = img.createGraphics();
-            n.drawImage(img,0,0,null);
-            g.drawImage(img.getScaledInstance(width, height, Image.SCALE_DEFAULT), 0, 0, null);
+            //Graphics n = img.createGraphics(); //вот это я тут эксперементировал, хз почему раньше не убрал
+            //n.drawImage(img,0,0,null);
+            g.drawImage(img.getScaledInstance(width, height, Image.SCALE_DEFAULT), 0, 0, null); // рисуем картинку просто с кайфом
             //System.out.println("DRAWED");
         } else {
             System.out.println("[paintComponent by "+this.getClass()+"]: img variable is null");
@@ -52,6 +56,7 @@ public abstract class Entity extends JComponent {
         repaint();
     }
 
+    // сеттер на картинку. На вход строка с путем к картинке. Берем картинку с этого пути или обрабатываем исключения
     protected void setImageURL(String url) {
         File imgFile = null;
         try {
@@ -62,5 +67,6 @@ public abstract class Entity extends JComponent {
         }
     }
 
+    // Абстрактный метод клонирования объекта. Необходимо переопределять в каждом классе. Нужен для корректной работы Habitat-а.
     public abstract Entity clone();
 }

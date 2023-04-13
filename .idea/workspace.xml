@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="20f3d4bd-2a90-41d9-b2c7-f749281f1429" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/__Java_Basics__Event_handling_and_delegating.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Java_Basics__GUI.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/__Java_Basics__Event_handling_and_delegating/Controllers/WindowController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/__Java_Basics__Event_handling_and_delegating/Controllers/WindowController$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/__Java_Basics__Event_handling_and_delegating/Controllers/WindowController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/__Java_Basics__Event_handling_and_delegating/Controllers/WindowController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/__Java_Basics__Event_handling_and_delegating/Models/Entities/Entity.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/__Java_Basics__Event_handling_and_delegating/Models/Entities/Entity.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/__Java_Basics__Event_handling_and_delegating/Models/Habitat.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/__Java_Basics__Event_handling_and_delegating/Models/Habitat.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/__Java_Basics__Event_handling_and_delegating/Models/StatisticsManager$InstancesCounter.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/__Java_Basics__Event_handling_and_delegating/Models/StatisticsManager$InstancesCounter.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/__Java_Basics__Event_handling_and_delegating/Models/StatisticsManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/__Java_Basics__Event_handling_and_delegating/Models/StatisticsManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/__Java_Basics__Event_handling_and_delegating/Models/WindowModel$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/__Java_Basics__Event_handling_and_delegating/Models/WindowModel$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/__Java_Basics__Event_handling_and_delegating/Models/WindowModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/__Java_Basics__Event_handling_and_delegating/Models/WindowModel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/__Java_Basics__Event_handling_and_delegating/Views/StatisticsLabel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/__Java_Basics__Event_handling_and_delegating/Views/StatisticsLabel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/__Java_Basics__Event_handling_and_delegating/Views/WindowView.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/__Java_Basics__Event_handling_and_delegating/Views/WindowView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controllers/WindowController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controllers/WindowController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Models/Entities/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Entities/Entity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Models/Entities/GoldFish.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Entities/GoldFish.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Models/Entities/Guppie.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Entities/Guppie.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Models/Habitat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Habitat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Models/Interfaces/IBehaivor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Interfaces/IBehaivor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Models/StatisticsManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/StatisticsManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Models/WindowModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/WindowModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Views/StatisticsLabel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Views/StatisticsLabel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Views/WindowView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Views/WindowView.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2OMxe7SKmRU6Obha5bNkVpcBN20" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "D:/__Java_Basics__Event_handling_and_delegating",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.lookFeel"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="Java_Basics__GUI" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="20f3d4bd-2a90-41d9-b2c7-f749281f1429" name="Changes" comment="" />
+      <created>1681384344357</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1681384344357</updated>
+    </task>
+    <servers />
+  </component>
+</project>

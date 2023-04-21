@@ -16,15 +16,11 @@ public class ImageDataAccessor extends Accessor{
     private ImageDataAccessor(){}
 
     @Override
-    public void add(String name, File file) throws IOException {
-
+    public void add(String name, Object obj) {
+        storage.put(name, obj);
     }
-
     @Override
     public BufferedImage get(String name) {
-        return null;
+        return (BufferedImage)storage.get(name);
     }
-
-
-
 }

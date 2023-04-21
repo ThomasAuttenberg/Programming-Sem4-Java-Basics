@@ -5,9 +5,11 @@ import Models.Entities.Entity;
 import Models.Entities.GoldFish;
 import Models.Entities.Guppie;
 import Models.WindowModel;
+import Views.ListObjectsWindow;
 import Views.OnStopDialogWindow;
 import Views.WindowView;
 
+import javax.swing.*;
 import java.awt.event.*;
 import java.util.Date;
 
@@ -57,7 +59,17 @@ public class WindowController {
            }
        }
 
-
+       // Первоначальная настройка времени жизни:
+       for(Entity ent : model.getHabitat().getGeneratingTypes()) {
+           if (ent.getClass() == GoldFish.class) {
+               int lifeTimeValue = (int)view.goldenFishLifeTime.getValue();
+               ent.setLifeTime(lifeTimeValue);
+           }
+           if (ent.getClass() == Guppie.class) {
+               int lifeTimeValue = (int)view.guppieLifeTime.getValue();
+               ent.setLifeTime(lifeTimeValue);
+           }
+       }
 
         /*
 
@@ -111,14 +123,58 @@ public class WindowController {
        view.radioSimTimeShow.addActionListener(infoEnableBtnListener);
        view.radioSimTimeHide.addActionListener(infoDisableBtnListener);
 
-
        view.goldenFishGenerationTime.addKeyListener(OnEnterReleased);
        view.guppieGenerationTime.addKeyListener(OnEnterReleased);
        view.goldenFishGenerationTime.addFocusListener(goldenTimeFieldFocusListener);
        view.guppieGenerationTime.addFocusListener(guppieTimeFieldFocusListener);
 
+       view.goldenFishChosenFrequency.addItemListener(comboBoxIListener);
+       view.guppieChosenFrequency.addItemListener(comboBoxIListener);
+
+       view.goldenFishLifeTime.addKeyListener(OnEnterReleased);
+       view.guppieLifeTime.addKeyListener(OnEnterReleased);
+       view.goldenFishLifeTime.addFocusListener(goldenLifeTimeFieldFocusListener);
+       view.guppieLifeTime.addFocusListener(guppieLifeTimeFieldFocusListener);
+
+       view.listObjects.addActionListener(aliveObjectsBtnListener);
+
    }
 
+   ItemListener comboBoxIListener = new ItemListener() {
+       @Override
+       public void itemStateChanged(ItemEvent e) {
+           JComboBox source = (JComboBox) e.getSource();
+           if (source == view.guppieChosenFrequency) {
+               String chosenFrequency = (String) source.getSelectedItem();
+               for (Entity ent : model.getHabitat().getGeneratingTypes()) {
+                   if (ent.getClass() == Guppie.class) {
+                       double frequency = Integer.parseInt(chosenFrequency.substring(0, chosenFrequency.length() - 1));
+                       ent.setFrequency(frequency / 100);
+                       //System.out.println(frequency / 100);
+                   }
+               }
+           }
+           if (source == view.goldenFishChosenFrequency) {
+               String chosenFrequency = (String) source.getSelectedItem();
+               for (Entity ent : model.getHabitat().getGeneratingTypes()) {
+                   if (ent.getClass() == GoldFish.class) {
+                       double frequency = Integer.parseInt(chosenFrequency.substring(0, chosenFrequency.length() - 1));
+                       ent.setFrequency(frequency / 100);
+                       //System.out.println(frequency / 100);
+                   }
+               }
+           }
+       }
+   };
+
+   ActionListener aliveObjectsBtnListener = new ActionListener() {
+       @Override
+       public void actionPerformed(ActionEvent e) {
+           ListObjectsWindow listObjectsWindow = new ListObjectsWindow(model);
+           //listObjectsWindow.LoadInfo(); // ПЕРЕДАТЬ ПАРАМЕТРЫ
+           listObjectsWindow.Show();
+       }
+   };
    ActionListener dialogSwitchListener = new ActionListener() {
        @Override
        public void actionPerformed(ActionEvent e) {
@@ -179,6 +235,40 @@ public class WindowController {
             }
         }
     };
+
+
+    FocusListener guppieLifeTimeFieldFocusListener = new FocusListener() {
+        @Override
+        public void focusGained(FocusEvent e) {
+
+        }
+
+        @Override
+        public void focusLost(FocusEvent e) {
+            for(Entity ent : model.getHabitat().getGeneratingTypes()){
+                if(ent.getClass() == Guppie.class){
+                    ent.setLifeTime((int)view.guppieLifeTime.getValue());
+                }
+            }
+        }
+    };
+
+    FocusListener goldenLifeTimeFieldFocusListener = new FocusListener() {
+        @Override
+        public void focusGained(FocusEvent e) {
+
+        }
+
+        @Override
+        public void focusLost(FocusEvent e) {
+            for(Entity ent : model.getHabitat().getGeneratingTypes()){
+                if(ent.getClass() == GoldFish.class){
+                    ent.setLifeTime((int)view.goldenFishLifeTime.getValue());
+                }
+            }
+        }
+    };
+
 
    ActionListener startBtnListener = new ActionListener() {
         @Override

@@ -13,6 +13,9 @@ public abstract class Entity extends JComponent {
     protected int height;
     private int generationTime = 2000;
     private double frequency = 0;
+    private long lifeTime;
+
+    private int id;
 
 
     protected Entity(int width, int height){
@@ -40,6 +43,21 @@ public abstract class Entity extends JComponent {
         return generationTime;
     }
 
+    public long getLifeTime(){
+        return lifeTime;
+    }
+
+    public void setLifeTime(long lifeTime){
+        this.lifeTime = lifeTime;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     // Переопределяем paintComponent функцию JComponent. Отвечает за отрисовку компонента.
     @Override

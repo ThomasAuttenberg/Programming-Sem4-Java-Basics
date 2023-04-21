@@ -4,12 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="db3a6a04-ec4c-45b1-9e10-2b3c5bab2b95" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Models/Storage/Accessor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Models/Storage/ImageDataAccessor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Views/OnStopDialogWindow.java" afterDir="false" />
+    <list default="true" id="db3a6a04-ec4c-45b1-9e10-2b3c5bab2b95" name="Changes" comment="Lab2 Prefinal version:&#10;Undone: Дата контейнер, Singleton контейнер сущностей Habitat, ToolTips">
+      <change afterPath="$PROJECT_DIR$/src/Views/ListObjectsWindow.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Controllers/WindowController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Controllers/WindowController$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Controllers/WindowController$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Controllers/WindowController$2.class" afterDir="false" />
@@ -22,18 +18,19 @@
       <change beforePath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Models/Entities/Entity.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Models/Entities/Entity.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Models/Entities/GoldFish.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Models/Entities/GoldFish.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Models/Entities/Guppie.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Models/Entities/Guppie.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Models/Habitat.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Models/Habitat.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Models/WindowModel$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Models/WindowModel$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Models/WindowModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Models/WindowModel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Views/StatisticsLabel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Views/StatisticsLabel.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Views/WindowView.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Views/WindowView.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controllers/WindowController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controllers/WindowController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Models/Entities/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Entities/Entity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Models/Entities/GoldFish.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Entities/GoldFish.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Models/Entities/Guppie.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Entities/Guppie.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Models/Interfaces/IBehaivor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Interfaces/IBehaivor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Models/Habitat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Habitat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Models/Storage/Accessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Storage/Accessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Models/Storage/ImageDataAccessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Storage/ImageDataAccessor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Models/WindowModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/WindowModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/StatisticsLabel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Views/StatisticsLabel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Views/WindowView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Views/WindowView.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -90,6 +87,41 @@
       <option name="presentableId" value="Default" />
       <updated>1681452678984</updated>
     </task>
+    <task id="LOCAL-00001" summary="Lab2 Prefinal version:&#10;Undone: Дата контейнер, Singleton контейнер сущностей Habitat, ToolTips">
+      <created>1682064034656</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1682064034656</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/lab2" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Lab2 Prefinal version:&#10;Undone: Дата контейнер, Singleton контейнер сущностей Habitat, ToolTips" />
+    <option name="LAST_COMMIT_MESSAGE" value="Lab2 Prefinal version:&#10;Undone: Дата контейнер, Singleton контейнер сущностей Habitat, ToolTips" />
   </component>
 </project>

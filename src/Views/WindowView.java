@@ -6,6 +6,8 @@ import Models.WindowModel;
 import javax.swing.*;
 import javax.swing.text.NumberFormatter;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.NumberFormat;
 
 
@@ -32,6 +34,7 @@ public class WindowView extends JFrame {
     // Публичные поля, хранящие компоненты правой панели
     public JButton startButton;
     public JButton stopButton;
+    public JButton listObjects;
     public JRadioButton radioSimTimeShow;
     public JRadioButton radioSimTimeHide;
     public JCheckBox dialogCheckBox;
@@ -39,6 +42,10 @@ public class WindowView extends JFrame {
     public JFormattedTextField goldenFishGenerationTime;
     public JComboBox goldenFishChosenFrequency;
     public JComboBox guppieChosenFrequency;
+
+    public JFormattedTextField guppieLifeTime;
+    public JFormattedTextField goldenFishLifeTime;
+
     private StatisticsLabel label;
 
     public JMenuBar menuBar;                   // главное меня  с дублированием пользовательского интерфейса
@@ -48,6 +55,7 @@ public class WindowView extends JFrame {
     public JMenuItem stopItem ;                // кнопка главного меню остановка симуляции
     // вкладка и вложенные вкладки статитстики
     public JMenu info;
+    public JMenu currentObjectsItem;
     public JMenuItem ItemInfoActive;
     public JMenuItem ItemInfoDeactive;
     // вкладка и вложенные вкладки управления диологовым окном
@@ -103,51 +111,100 @@ public class WindowView extends JFrame {
     public void MenuBar(){
         // класс для создания окна
 
-            menuBar = new JMenuBar();
-            // Создание вкладок
-            // вкладка главное
-            main = new JMenu("Main");               // главное содержит в себе запуск и остановку
-            startItem = new JMenuItem("Start");
-            stopItem = new JMenuItem("Stop");
-            startItem.setEnabled(true);
-            stopItem.setEnabled(false);
-            main.add(startItem);
-            main.addSeparator();
-            main.add(stopItem);
-            // вкладка Info
-            info = new JMenu("Info");               // статистика
-            ItemInfoActive = new JMenuItem("Active");
-            ItemInfoDeactive = new JMenuItem("Deactive");
-            ItemInfoDeactive.setEnabled(false);
-            info.add(ItemInfoActive);
-            info.addSeparator();
-            info.add(ItemInfoDeactive);
-            // вкладка Control
-            control = new JMenu("Window Dialog");
-            ItemActiveDialog = new JMenuItem("Active/Deactive Dialog");
-            ItemActiveDialog.setSelected(false);
-            control.add(ItemActiveDialog);
-            // Добавление вкладок в меню
-            menuBar.add(main);
-            menuBar.add(info);
-            menuBar.add(control);
-            this.setJMenuBar(menuBar);
+        menuBar = new JMenuBar();
+        // Создание вкладок
+        // вкладка главное
+        main = new JMenu("Main");               // главное содержит в себе запуск и остановку
+        startItem = new JMenuItem("Start");
+        startItem.setToolTipText("Click start to run");
+        stopItem = new JMenuItem("Stop");
+        stopItem.setToolTipText("Click stop to finish");
+        startItem.setEnabled(true);
+        stopItem.setEnabled(false);
+        main.add(startItem);
+        main.addSeparator();
+        main.add(stopItem);
+        // вкладка Info
+        info = new JMenu("Info");               // статистика
+        ItemInfoActive = new JMenuItem("Active");
+        ItemInfoActive.setToolTipText("Click -Active- to show statistics");
+        ItemInfoDeactive = new JMenuItem("Deactive");
+        ItemInfoDeactive.setToolTipText("Click -Deactive- to hide statistics");
+        ItemInfoDeactive.setEnabled(false);
+        info.add(ItemInfoActive);
+        info.addSeparator();
+        info.add(ItemInfoDeactive);
+        // вкладка Control
+        control = new JMenu("Window Dialog");
+        ItemActiveDialog = new JMenuItem("Active/Deactive Dialog");
+        ItemActiveDialog.setToolTipText("Click -Active/Deactive Dialog- to show/hide the statistics dialog");
+        ItemActiveDialog.setSelected(false);
+        control.add(ItemActiveDialog);
+        // Добавление вкладок в меню
+        menuBar.add(main);
+        menuBar.add(info);
+        menuBar.add(control);
+        this.setJMenuBar(menuBar);
     }
 
+
+    public void initLifeTimeFields(){
+        NumberFormat format = NumberFormat.getInstance();
+        NumberFormatter formatter = new NumberFormatter(format);
+        formatter.setValueClass(Integer.class);
+        formatter.setMinimum(1000);
+        formatter.setMaximum(99999);
+
+
+        guppieLifeTime = new JFormattedTextField(formatter);
+        guppieLifeTime.setColumns(5);
+        guppieLifeTime.setValue(10000);
+        guppieLifeTime.setBackground(fieldsColor);
+        guppieLifeTime.setBorder(null);
+
+        JLabel guppieLifeTimeLabel = new JLabel("Guppie lifetime");
+        guppieLifeTimeLabel.setForeground(textColor);
+
+        JPanel guppieLifeTimeContainer = new JPanel();
+        guppieLifeTimeContainer.add(guppieLifeTimeLabel);
+        guppieLifeTimeContainer.add(guppieLifeTime);
+        guppieLifeTimeContainer.setBackground(bgColor);
+
+
+        goldenFishLifeTime = new JFormattedTextField(formatter);
+        goldenFishLifeTime.setColumns(4);
+        goldenFishLifeTime.setValue(10000);
+        goldenFishLifeTime.setBackground(fieldsColor);
+        goldenFishLifeTime.setBorder(null);
+
+        JLabel goldenLifeTimeLabel = new JLabel("GoldenFish lifetime");
+        goldenLifeTimeLabel.setForeground(textColor);
+
+        JPanel goldenLifeTimeContainer = new JPanel();
+        goldenLifeTimeContainer.add(goldenLifeTimeLabel);
+        goldenLifeTimeContainer.add(goldenFishLifeTime);
+        goldenLifeTimeContainer.setBackground(bgColor);
+
+        controlPanel.add(goldenLifeTimeContainer);
+        controlPanel.add(guppieLifeTimeContainer);
+
+    }
 
 
     public void initStartStopButtons() {
 
         // Инициализируем кнопки "Старт" и "Стоп" конструкторами по умолчанию
         this.startButton = new JButton("Start");
+        startButton.setToolTipText("Click start to run");
         this.stopButton = new JButton("Stop");
+        stopButton.setToolTipText("Click stop to finish");
         stopButton.setEnabled(false);
         stopButton.setForeground(Color.WHITE);
 
         // Создаем, настраиваем и устанавливаем кнопки Start/Stop
         Color colorForStartButton = new Color(0,255,76);
         startButton.setBackground(colorForStartButton);
-       // startButton.setContentAreaFilled(false); // TODO возможно меняет цвет кнопки при нажатии
+        // startButton.setContentAreaFilled(false); // TODO возможно меняет цвет кнопки при нажатии
         startButton.setBorder(null);
         startButton.setOpaque(true);
         startButton.setFocusable(false);
@@ -171,12 +228,14 @@ public class WindowView extends JFrame {
     public void initRadioButtons() {
         // Создание радиокнопок для показа и сокрытия времени симуляции
         radioSimTimeShow = new JRadioButton("Show time");
+        radioSimTimeShow.setToolTipText("Click -Show time- to show simulation time");
         radioSimTimeShow.setBorderPainted(true);
         radioSimTimeShow.setForeground(textColor);
         radioSimTimeShow.setContentAreaFilled(false);
         radioSimTimeShow.setFocusable(false);
 
         radioSimTimeHide = new JRadioButton("Hide time");
+        radioSimTimeHide.setToolTipText("Click -Hide time- to hide the simulation time");
         radioSimTimeHide.setBorderPainted(true);
         radioSimTimeHide.setForeground(textColor);
         radioSimTimeHide.setContentAreaFilled(false);
@@ -201,6 +260,7 @@ public class WindowView extends JFrame {
 
         // Создаем чекбокс, разрешающий или запрещающий показ окна информации после окончания симуляции
         dialogCheckBox = new JCheckBox("Stopping dialog window");
+        dialogCheckBox.setToolTipText("Click -Stopping dialog window- to show/hide the statistics dialog");
         dialogCheckBox.setForeground(textColor);
         dialogCheckBox.setContentAreaFilled(false);
         dialogCheckBox.setFocusable(false);
@@ -210,6 +270,28 @@ public class WindowView extends JFrame {
         dialogCheckBoxContainer.setBackground(bgColor);
         controlPanel.add(dialogCheckBoxContainer);
     }
+
+    public void initListQbjects(){
+        this.listObjects = new JButton("Alive Objects");
+        listObjects.setToolTipText("Click -List Objects- to see a list of current objects");
+        listObjects.setEnabled(true);
+        listObjects.setForeground(Color.black);
+        listObjects.setBackground(Color.gray);
+
+        //Color colorForCurrentObjects = new Color(148, 0, 211);
+        //listObjects.setBackground(colorForCurrentObjects);
+        listObjects.setOpaque(true);
+        listObjects.setBorder(null);
+        listObjects.setFocusable(false);
+
+
+
+        JPanel panelCurrentObjects = new JPanel();
+        panelCurrentObjects.add(listObjects);
+        panelCurrentObjects.setBackground(bgColor);
+        controlPanel.add(panelCurrentObjects);
+    }
+
     public void initGenerationTime() {
 
         // Форматтер для полей
@@ -285,13 +367,15 @@ public class WindowView extends JFrame {
         controlPanel.add(goldContainer);
     }
     public void initPanelElements() {
-        controlPanel.setLayout(new GridLayout(9,1));
+        controlPanel.setLayout(new GridLayout(10,1));
         controlPanel.setBackground(bgColor);
         initStartStopButtons();
         initRadioButtons();
         initShowInformation();
         initGenerationTime();
         initChanceOfGeneration();
+        initLifeTimeFields();
+        initListQbjects();
     }
     public void toogleStatisticsLabel() { // Метод, включение/выключение видимости StatisticsLabel (надпись "Simulation time:")
         if (model.getSimulationBeginTime() != -1) {

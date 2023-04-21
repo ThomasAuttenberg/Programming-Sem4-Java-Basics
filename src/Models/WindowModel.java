@@ -28,6 +28,7 @@ public class WindowModel {
         habitat.addGeneratingType(new GoldFish(100,100)); //добавляем типы для генерации
         habitat.addGeneratingType(new Guppie(50,50));
         controlPanel = new JPanel();
+
     }
 
 

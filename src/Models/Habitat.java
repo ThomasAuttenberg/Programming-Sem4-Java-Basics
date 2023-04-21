@@ -7,18 +7,16 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-
-
+import java.util.*;
 
 
 // Habitat - класс, представляющий собой все поле с рыбками (левая панель). Наследуется, по логике, от JPanel.
 // Хранит в себе рыбок в качестве компонентов
 
 public class Habitat extends JPanel {
-    private final ArrayList<Entity> entities; // Список хранящихся существ (рыбок)
+    private final LinkedList<Entity> entities; // Список хранящихся существ (рыбок)
+    private final HashSet<Integer> entitiesID;
+    private final TreeMap<Integer, Long> bornTime;
     private final StatisticsManager stats; // Статистик-менеджер.
     private final HashSet<Entity> generatingTypes;
     //    !!!!!!! Список уникальных (на самом деле надо переопределить еще hashCode и equals в наших объектах, чтобы HashSet действительно смотрел на уникальность)
@@ -55,13 +53,12 @@ public class Habitat extends JPanel {
         // Абсолютное позиционирование. Обнуляем лэйаут менеджер.
 
         generatingTypes = new HashSet<>(); // просто выделяем память под наши поля
-        entities = new ArrayList<>();
+        entities = new LinkedList<>();
         lastUpdate = new HashMap<>();
-
-
+        entitiesID = new HashSet<>();
+        bornTime = new TreeMap<>();
 
     }
-
 
     public Habitat(StatisticsManager stats, String backgroundImageURL) {
         this.stats = stats;
@@ -73,33 +70,28 @@ public class Habitat extends JPanel {
     }
 
 
-    public ArrayList<Entity> getEntities(){
+    public LinkedList<Entity> getEntities(){
         return entities;
     }
 
 
     public void update(long simulationTime){
 
-
+        // Генерация новых объектов
         for(Entity type : generatingTypes){ // для каждого type из generatingTypes.
             if(simulationTime - lastUpdate.get(type) >= type.getGenerationTime()){ //если время симуляции >= время генерации типа + время последнего обновления
                 lastUpdate.put(type, simulationTime - simulationTime%type.getGenerationTime()); // устанавливаем время последнего обновления
 
-                // Это необязательно, можно убрать
-                /*  if(type.getFrequency() >= 1.0){ // Частота может быть установлена в качестве 1 или больше, т.е. гарантированная генерация
-                    Entity newEntity = type.clone(); // клонируем объект
-                    entities.add(newEntity); // добавляем в массив объектов
-                    this.add(newEntity); // добавляем в качестве компонента JPanel
-                }else{
-
-               */
                     double rand = Math.random();  // Получаем ранд число в полуинтервале [0;1)
                     if(rand<=type.getFrequency()){ // если оно меньше, чем частота появления
                         Entity newEntity = type.clone(); // Клонируем объект
-                        newEntity.setLocation((int)(Math.random()*(this.getWidth()+1)),(int)(Math.random()*(this.getHeight()+1))); // Устанавливаем его локацию случайным образом
+                        newEntity.setLifeTime(type.getLifeTime()); //Копируем время жизни в новый объект
+                        int newEntID = setNewID(newEntity); // Устанавливаем новый идентификатор на объект
+                        bornTime.put(newEntID, simulationTime); //Устанавливаем время рождения
+                        newEntity.setLocation((int)(Math.random()*(this.getWidth()*0.8+1)),(int)(Math.random()*(this.getHeight()*0.8+1))); // Устанавливаем его локацию случайным образом
                         this.add(newEntity); //добавляем как компонент JPanel
                         entities.add(newEntity); // добавляем в список объектов Habitat
-                        System.out.println("REVALIDATION"); // просто логирование для себя делал
+                        //System.out.println("REVALIDATION"); // просто логирование для себя делал
                         stats.instancesCounter.incrementInstance(type.getClass()); // Вызываем счетчик объектов менеджера статистики, передаем класс объекта
                         // Счетчик объектов этого типа увеличится на 1.
                         // (Возможный баг: если мы будем передавать модифицированные типы с разными значениями полей, он также будет считать их как объект одного класса)
@@ -107,7 +99,23 @@ public class Habitat extends JPanel {
 
             }
         }
-       this.repaint(); // На каждом обновлении перерисовываем JPanel. Просто потому что это логично
+        // Удаление старых
+        ArrayList<Entity> entitiesToRemove = new ArrayList<>();
+        for(Entity ent : entities){
+
+           int entityID = ent.getId();
+           if(simulationTime - bornTime.get(entityID) > ent.getLifeTime()){
+                entitiesToRemove.add(ent);
+           }
+        }
+        for(Entity ent : entitiesToRemove){
+            removeEntityFromHabitat(ent);
+        }
+
+
+
+
+       this.repaint(); // На каждом обновлении перерисовываем JPanel.
     }
 
     public void addGeneratingType(Entity typeToGenerate) // метод добавляет хабитату тип для генерации
@@ -152,4 +160,58 @@ public class Habitat extends JPanel {
             lastUpdate.put(type,0L);
         }
     }
+
+    public HashSet<Integer> getEntitiesID() {
+        return entitiesID;
+    }
+
+    public TreeMap<Integer, Long> getBornTime() {
+        return bornTime;
+    }
+
+
+    private Entity getEntityByID(int id){
+        for (Entity ent : entities){
+            if(ent.getId() == id){
+                return ent;
+            }
+        }
+       return null;
+    }
+
+    private int setNewID(Entity ent){
+
+        while(true){
+
+            int newId = (int)(Math.random() * Integer.MAX_VALUE);
+
+            if( entitiesID.contains(newId) ) continue;
+
+            ent.setId(newId);
+            entitiesID.add(newId);
+            return newId;
+
+        }
+
+    }
+
+    private void removeEntityFromHabitat(int ID){
+        for(Entity ent : entities){
+            if(ent.getId() == ID){
+                this.remove(ent);
+                bornTime.remove(ID);
+                entitiesID.remove(ID);
+                entities.remove(ent);
+            }
+        }
+    }
+
+    private void removeEntityFromHabitat(Entity ent){
+                int entId = ent.getId();
+                this.remove(ent);
+                bornTime.remove(entId);
+                entitiesID.remove(entId);
+                entities.remove(ent);
+    }
+
 }

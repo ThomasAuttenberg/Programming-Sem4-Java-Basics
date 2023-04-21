@@ -6,10 +6,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 public abstract class Accessor {
-    static public Accessor instance;
-
-    private HashMap<String, Object> storage = new HashMap<>();
-    protected Accessor(){}
-    public abstract void add(String name, File file) throws IOException;
+    protected HashMap<String, Object> storage = new HashMap<>();
+    protected abstract void add(String name, Object obj);
     public abstract Object get(String name);
 }

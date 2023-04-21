@@ -1,9 +1,11 @@
 package Models.Entities;
 
+import Models.Storage.ImageDataAccessor;
+
 public class GoldFish extends Entity {
 
     {
-        this.setImageURL("res/goldfish.png"); // аналогично
+        this.setImg(ImageDataAccessor.instance.get("res/goldfish.png")); // аналогично
     }
     public GoldFish(int width, int height){
         super(width,height);

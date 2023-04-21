@@ -3,6 +3,7 @@ package Models;
 import Models.Entities.GoldFish;
 import Models.Entities.Guppie;
 
+
 import javax.swing.*;
 import java.util.Date;
 import java.util.TimerTask;
@@ -17,6 +18,7 @@ public class WindowModel {
     private int timerDelay = 0; // Задаем начальные условия - задержка таймера и период обновления
     private int timerPeriod = 1000;
     private Timer timer;
+    private long lastTimerTick;
 
     {
 
@@ -26,7 +28,6 @@ public class WindowModel {
         habitat.addGeneratingType(new GoldFish(100,100)); //добавляем типы для генерации
         habitat.addGeneratingType(new Guppie(50,50));
         controlPanel = new JPanel();
-
     }
 
 
@@ -56,19 +57,29 @@ public class WindowModel {
 
     public void stopSimulation(){ //Остановка симуляции: (не пауза)
         timer.cancel(); // прекращаем таймер
+        timer.purge();
         this.simulationBeginTime = -1; // время начала симуляции в минус один.
         habitat.stopSimulation(); // останавливаем симуляцию Habitat
         //this.getStatisticsManager().clear();
     }
 
-    public void createTimer(){ // Запуск таймера
-        Timer timer = new Timer();
+    public void pauseSimulation(){
+        lastTimerTick = new Date().getTime();
+        timer.cancel();
+    }
+    public void unpauseSimulation(){
+        simulationBeginTime += new Date().getTime() - lastTimerTick;
+        createTimer();
+    }
+
+    private void createTimer(){ // Запуск таймера
+        timer = new Timer();
         timer.schedule(new TimerTask() {
             public void run(){
                 habitat.update(new Date().getTime()-simulationBeginTime);
             }
         }, timerDelay, timerPeriod);
-        this.timer = timer;
     }
+
 
 }

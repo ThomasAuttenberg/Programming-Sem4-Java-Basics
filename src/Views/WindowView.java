@@ -6,9 +6,6 @@ import Models.WindowModel;
 import javax.swing.*;
 import javax.swing.text.NumberFormatter;
 import java.awt.*;
-import java.net.URL;
-import java.text.DecimalFormat;
-import java.text.Format;
 import java.text.NumberFormat;
 
 
@@ -25,6 +22,9 @@ public class WindowView extends JFrame {
     private Habitat habitat; // На самом деле избыточное поле. Можно обойтись хранением модели.
     private JPanel controlPanel; // В целом возможно тоже избыточное
 
+
+
+
     Color fieldsColor = new Color(134, 134, 134);
     Color bgColor = new Color(54, 54, 54);
     Color textColor = new Color(178, 178, 178);
@@ -40,6 +40,20 @@ public class WindowView extends JFrame {
     public JComboBox goldenFishChosenFrequency;
     public JComboBox guppieChosenFrequency;
     private StatisticsLabel label;
+
+    public JMenuBar menuBar;                   // главное меня  с дублированием пользовательского интерфейса
+    // вкладка и вложеные вкладки главного
+    public JMenu main;                        // главное содержит в себе запуск и остановку
+    public JMenuItem startItem;                // кнопка главного меню старт симуляции
+    public JMenuItem stopItem ;                // кнопка главного меню остановка симуляции
+    // вкладка и вложенные вкладки статитстики
+    public JMenu info;
+    public JMenuItem ItemInfoActive;
+    public JMenuItem ItemInfoDeactive;
+    // вкладка и вложенные вкладки управления диологовым окном
+    public JMenu control;
+    public JMenuItem ItemActiveDialog;
+
     // Ширина, высота окна
     int width;
     int height;
@@ -57,6 +71,7 @@ public class WindowView extends JFrame {
 
     public WindowView(WindowModel model, int width, int height){
 
+
         // Сохраняем информацию о ширине и высоте окна
         this.width = width;
         this.height = height;
@@ -68,25 +83,65 @@ public class WindowView extends JFrame {
         this.habitat = model.getHabitat();
         this.controlPanel = model.getControlPanel();
 
+
         // Инициализируем все компоненты объекта JPanel
         this.initPanelElements();
 
         this.setFocusable(true);
 
+
         // Добавляем Habitat и JPanel на экран
         this.add(habitat);
         this.add(controlPanel, BorderLayout.EAST);
+        MenuBar();
 
         // Устанавливаем размер окна приложения и включаем его.
         this.setSize(width,height);
         this.setVisible(true);
     }
 
+    public void MenuBar(){
+        // класс для создания окна
+
+            menuBar = new JMenuBar();
+            // Создание вкладок
+            // вкладка главное
+            main = new JMenu("Main");               // главное содержит в себе запуск и остановку
+            startItem = new JMenuItem("Start");
+            stopItem = new JMenuItem("Stop");
+            startItem.setEnabled(true);
+            stopItem.setEnabled(false);
+            main.add(startItem);
+            main.addSeparator();
+            main.add(stopItem);
+            // вкладка Info
+            info = new JMenu("Info");               // статистика
+            ItemInfoActive = new JMenuItem("Active");
+            ItemInfoDeactive = new JMenuItem("Deactive");
+            ItemInfoDeactive.setEnabled(false);
+            info.add(ItemInfoActive);
+            info.addSeparator();
+            info.add(ItemInfoDeactive);
+            // вкладка Control
+            control = new JMenu("Window Dialog");
+            ItemActiveDialog = new JMenuItem("Active/Deactive Dialog");
+            ItemActiveDialog.setSelected(false);
+            control.add(ItemActiveDialog);
+            // Добавление вкладок в меню
+            menuBar.add(main);
+            menuBar.add(info);
+            menuBar.add(control);
+            this.setJMenuBar(menuBar);
+    }
+
+
+
     public void initStartStopButtons() {
 
         // Инициализируем кнопки "Старт" и "Стоп" конструкторами по умолчанию
         this.startButton = new JButton("Start");
         this.stopButton = new JButton("Stop");
+        stopButton.setEnabled(false);
         stopButton.setForeground(Color.WHITE);
 
         // Создаем, настраиваем и устанавливаем кнопки Start/Stop
@@ -116,7 +171,6 @@ public class WindowView extends JFrame {
     public void initRadioButtons() {
         // Создание радиокнопок для показа и сокрытия времени симуляции
         radioSimTimeShow = new JRadioButton("Show time");
-        radioSimTimeShow.setSelected(true);
         radioSimTimeShow.setBorderPainted(true);
         radioSimTimeShow.setForeground(textColor);
         radioSimTimeShow.setContentAreaFilled(false);
@@ -127,6 +181,7 @@ public class WindowView extends JFrame {
         radioSimTimeHide.setForeground(textColor);
         radioSimTimeHide.setContentAreaFilled(false);
         radioSimTimeHide.setFocusable(false);
+        radioSimTimeHide.setSelected(true);
 
         // Объединение радиокнопок в группу, чтобы можно было выбрать только одну
         ButtonGroup group = new ButtonGroup();
@@ -245,7 +300,6 @@ public class WindowView extends JFrame {
                 initLabel();
 
             label.setVisible(!label.isVisible());
-
         }
     }
 
@@ -255,17 +309,15 @@ public class WindowView extends JFrame {
             if(comp == label) habitat.remove(label); // удаляем объект в habitat
             System.out.println("Removed");
         }
-        label = new StatisticsLabel(model.getSimulationBeginTime());
+        label = new StatisticsLabel(model);
 
         habitat.add(label);
         label.setBounds(0,0,300,100);
+        label.setVisible( radioSimTimeShow.isSelected() );
     }
 
     public StatisticsLabel getStatisticsLabel(){
         return label;
     }
-
-
-
 
 }

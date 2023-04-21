@@ -66,6 +66,9 @@ public abstract class Entity extends JComponent {
             System.out.println("Can't load image" + (imgFile == null ? (": incorrect URL") : (" on "+url) ) );
         }
     }
+    protected void setImg(BufferedImage img){
+        this.img = img;
+    }
 
     // Абстрактный метод клонирования объекта. Необходимо переопределять в каждом классе. Нужен для корректной работы Habitat-а.
     public abstract Entity clone();

@@ -1,6 +1,7 @@
 package Models.Storage;
 
 
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -16,11 +17,11 @@ public class ImageDataAccessor extends Accessor{
     private ImageDataAccessor(){}
 
     @Override
-    public void add(String name, Object obj) {
-        storage.put(name, obj);
-    }
-    @Override
-    public BufferedImage get(String name) {
+    public BufferedImage get(String name) throws IOException {
+        if(storage.containsKey(name))
+            return (BufferedImage)storage.get(name);
+
+        storage.put(name, ImageIO.read(new File(name)));
         return (BufferedImage)storage.get(name);
     }
 }

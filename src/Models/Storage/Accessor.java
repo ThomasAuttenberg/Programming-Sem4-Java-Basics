@@ -7,6 +7,6 @@ import java.util.HashMap;
 
 public abstract class Accessor {
     protected HashMap<String, Object> storage = new HashMap<>();
-    protected abstract void add(String name, Object obj);
-    public abstract Object get(String name);
+    //protected abstract void add(String name, Object obj);
+    public abstract Object get(String name) throws IOException;
 }

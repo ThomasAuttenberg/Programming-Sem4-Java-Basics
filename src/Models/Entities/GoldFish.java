@@ -2,10 +2,20 @@ package Models.Entities;
 
 import Models.Storage.ImageDataAccessor;
 
+import java.io.IOException;
+
 public class GoldFish extends Entity {
 
     {
-        this.setImg(ImageDataAccessor.instance.get("res/goldfish.png")); // аналогично
+
+        try {
+
+            this.setImg(ImageDataAccessor.instance.get("res/goldfish.png")); // аналогично
+
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
     public GoldFish(int width, int height){
         super(width,height);

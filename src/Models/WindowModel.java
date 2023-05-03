@@ -16,7 +16,7 @@ public class WindowModel {
     private long simulationBeginTime = -1; // Время начала симуляции
 
     private int timerDelay = 0; // Задаем начальные условия - задержка таймера и период обновления
-    private int timerPeriod = 1000;
+    private int timerPeriod = 100;
     private Timer timer;
     private long lastTimerTick;
 

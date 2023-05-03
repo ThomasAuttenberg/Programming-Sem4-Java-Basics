@@ -1,5 +1,6 @@
 package Models.Entities;
 
+import Models.Interfaces.IBehaivor;
 import Models.Storage.ImageDataAccessor;
 
 import java.io.IOException;
@@ -24,5 +25,10 @@ public class GoldFish extends Entity {
     @Override
     public Entity clone() { //переопределяем clone метод Entity
         return new GoldFish(this.width, this.height);
+    }
+
+    @Override
+    public void shift(int x, int y) {
+        this.setLocation(this.getX()+x,this.getY()+y);
     }
 }

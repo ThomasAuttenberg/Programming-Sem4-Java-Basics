@@ -1,12 +1,14 @@
 package Models;
 
 import Models.Entities.Entity;
+import Models.Entities.GoldFish;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.security.KeyPair;
 import java.util.*;
 
 
@@ -14,7 +16,8 @@ import java.util.*;
 // Хранит в себе рыбок в качестве компонентов
 
 public class Habitat extends JPanel {
-    private final LinkedList<Entity> entities; // Список хранящихся существ (рыбок)
+
+    private volatile LinkedList<Entity> entities; // Список хранящихся существ (рыбок)
     private final HashSet<Integer> entitiesID;
     private final TreeMap<Integer, Long> bornTime;
     private final StatisticsManager stats; // Статистик-менеджер.
@@ -38,6 +41,8 @@ public class Habitat extends JPanel {
     // было появиться несколько рыбок, появится только одна.
     // в идеале систему надо немного поменять. Идеи приветствуются
     //
+    private BaseAI goldFishAI;
+    private BaseAI guppieAI;
 
 
     private BufferedImage backgroundImage;
@@ -53,10 +58,13 @@ public class Habitat extends JPanel {
         // Абсолютное позиционирование. Обнуляем лэйаут менеджер.
 
         generatingTypes = new HashSet<>(); // просто выделяем память под наши поля
-        entities = new LinkedList<>();
+        entities = new LinkedList<Entity>();
         lastUpdate = new HashMap<>();
         entitiesID = new HashSet<>();
         bornTime = new TreeMap<>();
+
+
+
 
     }
 
@@ -75,47 +83,44 @@ public class Habitat extends JPanel {
     }
 
 
-    public void update(long simulationTime){
-
-        // Генерация новых объектов
-        for(Entity type : generatingTypes){ // для каждого type из generatingTypes.
-            if(simulationTime - lastUpdate.get(type) >= type.getGenerationTime()){ //если время симуляции >= время генерации типа + время последнего обновления
-                lastUpdate.put(type, simulationTime - simulationTime%type.getGenerationTime()); // устанавливаем время последнего обновления
+    public void update(long simulationTime) {
+            // Генерация новых объектов
+            for (Entity type : generatingTypes) { // для каждого type из generatingTypes.
+                if (simulationTime - lastUpdate.get(type) >= type.getGenerationTime()) { //если время симуляции >= время генерации типа + время последнего обновления
+                    lastUpdate.put(type, simulationTime - simulationTime % type.getGenerationTime()); // устанавливаем время последнего обновления
 
                     double rand = Math.random();  // Получаем ранд число в полуинтервале [0;1)
-                    if(rand<=type.getFrequency()){ // если оно меньше, чем частота появления
+                    if (rand <= type.getFrequency()) { // если оно меньше, чем частота появления
                         Entity newEntity = type.clone(); // Клонируем объект
                         newEntity.setLifeTime(type.getLifeTime()); //Копируем время жизни в новый объект
                         int newEntID = setNewID(newEntity); // Устанавливаем новый идентификатор на объект
                         bornTime.put(newEntID, simulationTime); //Устанавливаем время рождения
-                        newEntity.setLocation((int)(Math.random()*(this.getWidth()*0.8+1)),(int)(Math.random()*(this.getHeight()*0.8+1))); // Устанавливаем его локацию случайным образом
+                        newEntity.setLocation((int) (Math.random() * (this.getWidth() * 0.8 + 1)), (int) (Math.random() * (this.getHeight() * 0.8 + 1))); // Устанавливаем его локацию случайным образом
                         this.add(newEntity); //добавляем как компонент JPanel
                         entities.add(newEntity); // добавляем в список объектов Habitat
                         //System.out.println("REVALIDATION"); // просто логирование для себя делал
                         stats.instancesCounter.incrementInstance(type.getClass()); // Вызываем счетчик объектов менеджера статистики, передаем класс объекта
                         // Счетчик объектов этого типа увеличится на 1.
                         // (Возможный баг: если мы будем передавать модифицированные типы с разными значениями полей, он также будет считать их как объект одного класса)
+                    }
+
                 }
-
             }
-        }
-        // Удаление старых
-        ArrayList<Entity> entitiesToRemove = new ArrayList<>();
-        for(Entity ent : entities){
+            // Удаление старых
+            ArrayList<Entity> entitiesToRemove = new ArrayList<>();
+            for (Entity ent : entities) {
 
-           int entityID = ent.getId();
-           if(simulationTime - bornTime.get(entityID) > ent.getLifeTime()){
-                entitiesToRemove.add(ent);
-           }
-        }
-        for(Entity ent : entitiesToRemove){
-            removeEntityFromHabitat(ent);
-        }
-
+                int entityID = ent.getId();
+                if (simulationTime - bornTime.get(entityID) > ent.getLifeTime()) {
+                    entitiesToRemove.add(ent);
+                }
+            }
+            for (Entity ent : entitiesToRemove) {
+                removeEntityFromHabitat(ent);
+            }
 
 
-
-       this.repaint(); // На каждом обновлении перерисовываем JPanel.
+            this.repaint(); // На каждом обновлении перерисовываем JPanel.
     }
 
     public void addGeneratingType(Entity typeToGenerate) // метод добавляет хабитату тип для генерации
@@ -155,10 +160,12 @@ public class Habitat extends JPanel {
         //*/
         //
     }
+
     public void startSimulation(){
         for(Entity type : generatingTypes){ //подготовка симуляции - расставляем нули в карте последних обновлений
             lastUpdate.put(type,0L);
         }
+        initAI();
     }
 
     public HashSet<Integer> getEntitiesID() {
@@ -212,6 +219,35 @@ public class Habitat extends JPanel {
                 bornTime.remove(entId);
                 entitiesID.remove(entId);
                 entities.remove(ent);
+    }
+
+    private void initAI(){
+        int speedPerSecond = 2500;
+
+        Object actionData = new ArrayList<Object>();
+        Date lastPositionUpdatingDate = new Date();
+        ((ArrayList<Object>)actionData).add(lastPositionUpdatingDate);
+        ((ArrayList<Object>)actionData).add(speedPerSecond);
+        goldFishAI = new BaseAI(entities, GoldFish.class, actionData) {
+            @Override
+            public void action(Entity ent, Object actionData) {
+
+                ArrayList actionDataArray = (ArrayList<Object>)actionData;
+
+                long lastPositionUpdatingTime = ((Date)actionDataArray.get(0)).getTime();
+                int speed = (int)actionDataArray.get(0);
+                long currentTime = new Date().getTime();
+
+                int shiftX = (int)( (currentTime - lastPositionUpdatingTime) / 1000 / speed );
+
+                ent.shift(100, 0);
+                ent.setLocation(0,0);
+                System.out.println("Meow");
+
+            }
+        };
+
+        goldFishAI.start();
     }
 
 }

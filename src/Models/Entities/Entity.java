@@ -1,12 +1,14 @@
 package Models.Entities;
 
+import Models.Interfaces.IBehaivor;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
-public abstract class Entity extends JComponent {
+public abstract class Entity extends JComponent implements IBehaivor {
 
     private BufferedImage img = null;
     protected int width;
@@ -90,4 +92,5 @@ public abstract class Entity extends JComponent {
 
     // Абстрактный метод клонирования объекта. Необходимо переопределять в каждом классе. Нужен для корректной работы Habitat-а.
     public abstract Entity clone();
+
 }

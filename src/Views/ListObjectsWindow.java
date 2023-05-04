@@ -43,7 +43,7 @@ public class ListObjectsWindow extends JFrame{
         Init_list();
     }
 
-    public void LoadInfo(LinkedList<Entity> objects, TreeMap<Integer, Long> times){
+    public void LoadInfo(List<Entity> objects, TreeMap<Integer, Long> times){
         text = new String[objects.size()];
         int i = -1;
         for(Entity ent : objects){

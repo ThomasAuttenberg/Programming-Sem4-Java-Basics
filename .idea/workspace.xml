@@ -4,18 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="db3a6a04-ec4c-45b1-9e10-2b3c5bab2b95" name="Changes" comment="Lab3 Prefinal version.&#10;Undo: мелкие правки">
-      <change afterPath="$PROJECT_DIR$/src/Models/BaseAI.java" afterDir="false" />
+    <list default="true" id="db3a6a04-ec4c-45b1-9e10-2b3c5bab2b95" name="Changes" comment="Lab4: undone: synchronization">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Models/Entities/Entity.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Models/Entities/Entity.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Models/Entities/GoldFish.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Models/Entities/GoldFish.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Models/Entities/Guppie.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Models/Entities/Guppie.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Models/Habitat.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Models/Habitat.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Models/Interfaces/IBehaivor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Models/Interfaces/IBehaivor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Models/WindowModel$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Models/WindowModel$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Models/WindowModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Models/WindowModel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controllers/WindowController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controllers/WindowController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Models/BaseAI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/BaseAI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Models/Entities/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Entities/Entity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Models/Entities/GoldFish.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Entities/GoldFish.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Models/Entities/Guppie.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Entities/Guppie.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Models/Habitat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Habitat.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Models/Interfaces/IBehaivor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Interfaces/IBehaivor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Models/WindowModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/WindowModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Views/ListObjectsWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Views/ListObjectsWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Views/WindowView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Views/WindowView.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,7 +98,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682099092617</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Lab4: undone: synchronization">
+      <created>1683133415994</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1683133415994</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -122,6 +135,7 @@
     <MESSAGE value="Lab2 Prefinal version:&#10;Undone: Дата контейнер, Singleton контейнер сущностей Habitat, ToolTips" />
     <MESSAGE value="Lab2 Prefinal version.&#10;Undo: мелкие правки" />
     <MESSAGE value="Lab3 Prefinal version.&#10;Undo: мелкие правки" />
-    <option name="LAST_COMMIT_MESSAGE" value="Lab3 Prefinal version.&#10;Undo: мелкие правки" />
+    <MESSAGE value="Lab4: undone: synchronization" />
+    <option name="LAST_COMMIT_MESSAGE" value="Lab4: undone: synchronization" />
   </component>
 </project>

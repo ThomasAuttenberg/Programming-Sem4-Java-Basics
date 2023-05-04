@@ -22,8 +22,4 @@ public class Guppie extends Entity {
         return new Guppie(this.width, this.height);
     }
 
-    @Override
-    public void shift(int x, int y) {
-        this.setLocation(this.getX()+x,this.getY()+y);
-    }
 }

@@ -43,6 +43,9 @@ public class WindowView extends JFrame {
     public JComboBox goldenFishChosenFrequency;
     public JComboBox guppieChosenFrequency;
 
+    public JComboBox guppieAIPriority;
+    public JComboBox goldenAIPriority;
+
     public JFormattedTextField guppieLifeTime;
     public JFormattedTextField goldenFishLifeTime;
 
@@ -366,8 +369,36 @@ public class WindowView extends JFrame {
         controlPanel.add(guppieContainer);
         controlPanel.add(goldContainer);
     }
+
+    public void initAIControllers(){
+
+        JPanel AIPrioritiesContainer = new JPanel();
+        AIPrioritiesContainer.setBackground(bgColor);
+
+        String items[] = {"0","1","2","3","4","5","6","7","8","9","10"};
+        guppieAIPriority = new JComboBox(items);
+        goldenAIPriority = new JComboBox(items);
+        guppieAIPriority.setSelectedIndex(5);
+        goldenAIPriority.setSelectedIndex(5);
+        guppieAIPriority.setFocusable(false);
+        goldenAIPriority.setFocusable(false);
+
+        JLabel guppieAILabel = new JLabel("Guppie AI:");
+        guppieAILabel.setForeground(textColor);
+        JLabel goldenAILabel = new JLabel("Golden AI:");
+        goldenAILabel.setForeground(textColor);
+
+        AIPrioritiesContainer.add(guppieAILabel);
+        AIPrioritiesContainer.add(guppieAIPriority);
+        AIPrioritiesContainer.add(goldenAILabel);
+        AIPrioritiesContainer.add(goldenAIPriority);
+
+        controlPanel.add(AIPrioritiesContainer);
+
+    }
+
     public void initPanelElements() {
-        controlPanel.setLayout(new GridLayout(10,1));
+        controlPanel.setLayout(new GridLayout(12,1));
         controlPanel.setBackground(bgColor);
         initStartStopButtons();
         initRadioButtons();
@@ -375,6 +406,16 @@ public class WindowView extends JFrame {
         initGenerationTime();
         initChanceOfGeneration();
         initLifeTimeFields();
+
+        JPanel labelContainer  = new JPanel();
+        labelContainer.setBackground(bgColor);
+        JLabel prioritiesSectionLabel = new JLabel("AI Threads Priorities:");
+        prioritiesSectionLabel.setForeground(textColor);
+        labelContainer.add(prioritiesSectionLabel);
+        controlPanel.add(labelContainer);
+
+
+        initAIControllers();
         initListQbjects();
     }
     public void toogleStatisticsLabel() { // Метод, включение/выключение видимости StatisticsLabel (надпись "Simulation time:")

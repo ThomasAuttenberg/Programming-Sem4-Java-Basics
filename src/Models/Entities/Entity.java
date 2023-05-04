@@ -10,7 +10,7 @@ import java.io.File;
 
 public abstract class Entity extends JComponent implements IBehaivor {
 
-    private BufferedImage img = null;
+    private Image img = null;
     protected int width;
     protected int height;
     private int generationTime = 2000;
@@ -65,15 +65,16 @@ public abstract class Entity extends JComponent implements IBehaivor {
     @Override
     protected void paintComponent(Graphics g) {
         //super.paintComponent(g);
+        //super.paintComponent(g);
         if (img != null) {
             //Graphics n = img.createGraphics(); //вот это я тут эксперементировал, хз почему раньше не убрал
             //n.drawImage(img,0,0,null);
-            g.drawImage(img.getScaledInstance(width, height, Image.SCALE_DEFAULT), 0, 0, null); // рисуем картинку просто с кайфом
+            g.drawImage(img, 0, 0, null); // рисуем картинку просто с кайфом
             //System.out.println("DRAWED");
         } else {
             System.out.println("[paintComponent by "+this.getClass()+"]: img variable is null");
         }
-        repaint();
+        //repaint();
     }
 
     // сеттер на картинку. На вход строка с путем к картинке. Берем картинку с этого пути или обрабатываем исключения
@@ -87,10 +88,14 @@ public abstract class Entity extends JComponent implements IBehaivor {
         }
     }
     protected void setImg(BufferedImage img){
-        this.img = img;
+        this.img = img.getScaledInstance(width,height,Image.SCALE_DEFAULT);
     }
 
     // Абстрактный метод клонирования объекта. Необходимо переопределять в каждом классе. Нужен для корректной работы Habitat-а.
     public abstract Entity clone();
 
+    @Override
+    public void shift(int x, int y) {
+            this.setLocation(this.getX() + x, this.getY() + y);
+    }
 }

@@ -1,6 +1,7 @@
 package Controllers;
 
 
+import Models.BaseAI;
 import Models.Entities.Entity;
 import Models.Entities.GoldFish;
 import Models.Entities.Guppie;
@@ -128,19 +129,49 @@ public class WindowController {
        view.goldenFishGenerationTime.addFocusListener(goldenTimeFieldFocusListener);
        view.guppieGenerationTime.addFocusListener(guppieTimeFieldFocusListener);
 
-       view.goldenFishChosenFrequency.addItemListener(comboBoxIListener);
-       view.guppieChosenFrequency.addItemListener(comboBoxIListener);
+       view.goldenFishChosenFrequency.addItemListener(freqComboBoxIListener);
+       view.guppieChosenFrequency.addItemListener(freqComboBoxIListener);
 
        view.goldenFishLifeTime.addKeyListener(OnEnterReleased);
        view.guppieLifeTime.addKeyListener(OnEnterReleased);
        view.goldenFishLifeTime.addFocusListener(goldenLifeTimeFieldFocusListener);
        view.guppieLifeTime.addFocusListener(guppieLifeTimeFieldFocusListener);
 
+       view.guppieAIPriority.addItemListener(priorityComboBoxIListener);
+       view.goldenAIPriority.addItemListener(priorityComboBoxIListener);
+
        view.listObjects.addActionListener(aliveObjectsBtnListener);
 
    }
 
-   ItemListener comboBoxIListener = new ItemListener() {
+    ItemListener priorityComboBoxIListener = new ItemListener() {
+        @Override
+        public void itemStateChanged(ItemEvent e) {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                JComboBox source = (JComboBox) e.getSource();
+                String chosenItem;
+                int chosenPriority;
+                BaseAI AI;
+                if (source == view.goldenAIPriority) {
+
+                    chosenItem = (String) view.goldenAIPriority.getSelectedItem();
+                    AI = model.getHabitat().getGoldFishAI();
+                    chosenPriority = Integer.parseInt(chosenItem);
+                    model.getHabitat().setGoldFishPriority(chosenPriority);
+
+                }
+                if (source == view.guppieAIPriority) {
+
+                    chosenItem = (String) view.guppieAIPriority.getSelectedItem();
+                    AI = model.getHabitat().getGuppieAI();
+                    chosenPriority = Integer.parseInt(chosenItem);
+                    model.getHabitat().setGuppiePriority(chosenPriority);
+                }
+            }
+        }
+    };
+
+   ItemListener freqComboBoxIListener = new ItemListener() {
        @Override
        public void itemStateChanged(ItemEvent e) {
            JComboBox source = (JComboBox) e.getSource();

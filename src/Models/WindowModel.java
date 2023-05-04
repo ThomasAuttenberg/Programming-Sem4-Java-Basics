@@ -16,7 +16,7 @@ public class WindowModel {
     private long simulationBeginTime = -1; // Время начала симуляции
 
     private int timerDelay = 0; // Задаем начальные условия - задержка таймера и период обновления
-    private int timerPeriod = 100;
+    private int timerPeriod = 500;
     private Timer timer;
     private long lastTimerTick;
 
@@ -59,16 +59,19 @@ public class WindowModel {
     public void stopSimulation(){ //Остановка симуляции: (не пауза)
         timer.cancel(); // прекращаем таймер
         timer.purge();
-        this.simulationBeginTime = -1; // время начала симуляции в минус один.
+        // время начала симуляции в минус один.
         habitat.stopSimulation(); // останавливаем симуляцию Habitat
+        this.simulationBeginTime = -1;
         //this.getStatisticsManager().clear();
     }
 
     public void pauseSimulation(){
         lastTimerTick = new Date().getTime();
+        habitat.pauseSimulation();
         timer.cancel();
     }
     public void unpauseSimulation(){
+        habitat.unpauseSimulation();
         simulationBeginTime += new Date().getTime() - lastTimerTick;
         createTimer();
     }
@@ -78,6 +81,7 @@ public class WindowModel {
         timer.schedule(new TimerTask() {
             public void run(){
                 habitat.update(new Date().getTime()-simulationBeginTime);
+                //habitat.movee();
             }
         }, timerDelay, timerPeriod);
     }

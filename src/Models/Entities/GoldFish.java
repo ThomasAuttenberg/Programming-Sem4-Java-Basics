@@ -27,8 +27,5 @@ public class GoldFish extends Entity {
         return new GoldFish(this.width, this.height);
     }
 
-    @Override
-    public void shift(int x, int y) {
-        this.setLocation(this.getX()+x,this.getY()+y);
-    }
+
 }

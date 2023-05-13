@@ -1,22 +1,24 @@
 package Models.Entities;
 
 import Models.Interfaces.IBehaivor;
+import Models.Storage.ImageDataAccessor;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
+import java.io.*;
 
-public abstract class Entity extends JComponent implements IBehaivor {
+public abstract class Entity extends JComponent implements IBehaivor, Serializable {
 
-    private Image img = null;
+    transient private Image img = null;
     protected int width;
     protected int height;
     private int generationTime = 2000;
     private double frequency = 0;
     private long lifeTime;
 
+    private String imageURL;
     private int id;
 
 
@@ -79,12 +81,11 @@ public abstract class Entity extends JComponent implements IBehaivor {
 
     // сеттер на картинку. На вход строка с путем к картинке. Берем картинку с этого пути или обрабатываем исключения
     protected void setImageURL(String url) {
-        File imgFile = null;
+        imageURL = url;
         try {
-            imgFile = new File(url);
-            img = ImageIO.read(imgFile);
-        } catch (Exception exception) {
-            System.out.println("Can't load image" + (imgFile == null ? (": incorrect URL") : (" on "+url) ) );
+            this.img = ImageDataAccessor.instance.get(url).getScaledInstance(width,height,Image.SCALE_DEFAULT);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
     protected void setImg(BufferedImage img){
@@ -98,4 +99,11 @@ public abstract class Entity extends JComponent implements IBehaivor {
     public void shift(int x, int y) {
             this.setLocation(this.getX() + x, this.getY() + y);
     }
+
+    @Serial
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException{
+        in.defaultReadObject();
+        setImageURL(imageURL);
+    }
+
 }

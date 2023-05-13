@@ -5,6 +5,7 @@ import Models.Entities.Guppie;
 
 
 import javax.swing.*;
+import java.io.ObjectInputStream;
 import java.util.Date;
 import java.util.TimerTask;
 import java.util.Timer;
@@ -15,6 +16,7 @@ public class WindowModel {
     private JPanel controlPanel; // Храним controlPanel - правую панель окна
     private long simulationBeginTime = -1; // Время начала симуляции
 
+    boolean loadedState = false;
     private int timerDelay = 0; // Задаем начальные условия - задержка таймера и период обновления
     private int timerPeriod = 500;
     private Timer timer;
@@ -48,13 +50,25 @@ public class WindowModel {
     }
 
     public void startSimulation(long simulationBeginTime) { //Старт симуляции:
-        habitat.revalidate(); //ревалидейт - служебный метод Swing. Необходимо вызывать каждый раз, когда удаляются объекты.
-        // скорее всего, мы запустим симуляцию после предыдущей симуляции - когда мы уже удалили кучу рыб
-        this.simulationBeginTime = simulationBeginTime; // выставляем время начала симуляции
-        habitat.startSimulation(); // запускаем симуляцию у Habitat
-        stats.clear(); // очищаем менеджер статистики - внутренний метод
+        this.simulationBeginTime = simulationBeginTime;
+        if(!loadedState){
+            habitat.revalidate(); //ревалидейт - служебный метод Swing. Необходимо вызывать каждый раз, когда удаляются объекты.
+            // скорее всего, мы запустим симуляцию после предыдущей симуляции - когда мы уже удалили кучу рыб
+             // выставляем время начала симуляции
+            stats.clear(); // очищаем менеджер статистики - внутренний метод
+            habitat.startSimulation();
+        }else{
+            habitat.startLoadedSimulation();
+        }
+        // запускаем симуляцию у Habitat
         createTimer(); // создаем таймер. см. ниже
     }
+
+    public void loadState(ObjectInputStream objectInputStream){
+        habitat.loadState(objectInputStream);
+        loadedState = true;
+    }
+
 
     public void stopSimulation(){ //Остановка симуляции: (не пауза)
         timer.cancel(); // прекращаем таймер
@@ -62,6 +76,7 @@ public class WindowModel {
         // время начала симуляции в минус один.
         habitat.stopSimulation(); // останавливаем симуляцию Habitat
         this.simulationBeginTime = -1;
+        loadedState = false;
         //this.getStatisticsManager().clear();
     }
 
@@ -81,10 +96,10 @@ public class WindowModel {
         timer.schedule(new TimerTask() {
             public void run(){
                 habitat.update(new Date().getTime()-simulationBeginTime);
-                //habitat.movee();
             }
         }, timerDelay, timerPeriod);
     }
+
 
 
 }

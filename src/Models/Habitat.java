@@ -19,15 +19,15 @@ import java.util.List;
 
 public class Habitat extends JPanel {
 
-    private final List<Entity> entities; // Список хранящихся существ (рыбок)
-    private final HashSet<Integer> entitiesID;
-    private final TreeMap<Integer, Long> bornTime;
-    private final StatisticsManager stats; // Статистик-менеджер.
-    private final HashSet<Entity> generatingTypes;
+    private List<Entity> entities; // Список хранящихся существ (рыбок)
+    private HashSet<Integer> entitiesID;
+    private TreeMap<Integer, Long> bornTime;
+    private StatisticsManager stats; // Статистик-менеджер.
+    private HashSet<Entity> generatingTypes;
     //    !!!!!!! Список уникальных (на самом деле надо переопределить еще hashCode и equals в наших объектах, чтобы HashSet действительно смотрел на уникальность)
     // объектов. Habitat будет брать отсюда объекты и копировать их, создавая новый, такой же объект, если частота и время генерации подходят
     // для генерации нового объекта. Одним словом, generatingTypes - список генерируемых типов
-    private final HashMap<Entity, Long> lastUpdate;
+    private HashMap<Entity, Long> lastUpdate;
     // Когда вызовется update по таймеру, мы получим время симуляции. Отлично, вот только время симуляции ничего
     // с математической точки зрения нам не даст. В прошлой версии лабораторной работы это все держалось на лютых костылях,
     // и если немного где-то подредактировать время - все посыпется.
@@ -45,6 +45,17 @@ public class Habitat extends JPanel {
     //
     private BaseAI goldFishAI;
     private BaseAI guppieAI;
+
+    private HashMap<Integer, Boolean> guppieDirectionMap = new HashMap<>();
+    private HashMap<Integer, Boolean> goldfishDirectionMap = new HashMap<>();
+
+    private Thread.State prePausedGuppieState;
+    private Thread.State prePausedGoldState;
+    private int guppieAIPriority = 5;
+    private int goldAIPriority = 5;
+
+
+    private long habitatTime = 0;
 
 
     private BufferedImage backgroundImage;
@@ -86,6 +97,8 @@ public class Habitat extends JPanel {
 
 
     public void update(long simulationTime) {
+
+        habitatTime = simulationTime;
         //synchronized (entities) {
             for (Entity type : generatingTypes) { // для каждого type из generatingTypes.
                 if (simulationTime - lastUpdate.get(type) >= type.getGenerationTime()) { //если время симуляции >= время генерации типа + время последнего обновления
@@ -143,6 +156,64 @@ public class Habitat extends JPanel {
             g.drawImage(backgroundImage,0,0,this.getWidth(),this.getHeight(), null);
     }
 
+    public long getHabitatTime(){
+        return habitatTime;
+    }
+
+    public void saveState(ObjectOutputStream os){
+
+        try {
+            os.writeObject(habitatTime);
+            os.writeObject(generatingTypes);
+            os.writeObject(entities);
+            os.writeObject(entitiesID);
+            os.writeObject(bornTime);
+            os.writeObject(lastUpdate);
+            os.writeObject(guppieDirectionMap);
+            os.writeObject(goldfishDirectionMap);
+            os.writeObject(stats);
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void loadState(ObjectInputStream is){
+
+        ArrayList<Entity> entitiesToRemove = new ArrayList<>();
+
+        for (Entity ent : entities) {
+            entitiesToRemove.add(ent);
+        }
+        for (Entity ent : entitiesToRemove) {
+            removeEntityFromHabitat(ent);
+        }
+        entities.clear();
+
+        try {
+            habitatTime = (long) is.readObject();
+            generatingTypes = (HashSet<Entity>) is.readObject();
+            entities = (List<Entity>) is.readObject();
+            for (Entity entity : entities) {
+                this.add(entity);
+            }
+            entitiesID = (HashSet<Integer>) is.readObject();
+            bornTime = (TreeMap<Integer, Long>) is.readObject();
+            lastUpdate = (HashMap<Entity, Long>) is.readObject();
+            guppieDirectionMap = (HashMap<Integer, Boolean>) is.readObject();
+            goldfishDirectionMap = (HashMap<Integer, Boolean>) is.readObject();
+            stats = (StatisticsManager) is.readObject();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        this.revalidate();
+        this.repaint();
+    }
+
+
     // Метод остановки симуляции. Удаление всех компонентов.
     public void stopSimulation(){
         for(Entity ent : entities){
@@ -156,19 +227,29 @@ public class Habitat extends JPanel {
     }
 
     public void pauseSimulation(){
+        prePausedGoldState = goldFishAI.getState();
+        prePausedGuppieState = guppieAI.getState();
+        if (prePausedGoldState != Thread.State.WAITING)
         goldFishAI.toogleWaitingMode();
+        if (prePausedGuppieState != Thread.State.WAITING)
         guppieAI.toogleWaitingMode();
     }
 
     public void unpauseSimulation(){
-        goldFishAI.toogleWaitingMode();
-        guppieAI.toogleWaitingMode();
+        if(prePausedGoldState != Thread.State.WAITING)
+            goldFishAI.toogleWaitingMode();
+        if(prePausedGuppieState != Thread.State.WAITING)
+            guppieAI.toogleWaitingMode();
     }
 
     public void startSimulation(){
         for(Entity type : generatingTypes){ //подготовка симуляции - расставляем нули в карте последних обновлений
             lastUpdate.put(type,0L);
         }
+        initAI();
+    }
+
+    public void startLoadedSimulation(){
         initAI();
     }
 
@@ -189,40 +270,50 @@ public class Habitat extends JPanel {
     }
 
     public synchronized void setGoldFishPriority(int chosenPriority){
-        if(chosenPriority == 0){
+        if(goldFishAI != null) {
+            if (chosenPriority == 0) {
 
-            if(!(goldFishAI.getState() == Thread.State.WAITING)) {
-                goldFishAI.toogleWaitingMode();
+                if (!(goldFishAI.getState() == Thread.State.WAITING)) {
+                    goldFishAI.toogleWaitingMode();
+                }
+
+            } else {
+
+                if (goldFishAI.getState() == Thread.State.WAITING) {
+                    goldFishAI.toogleWaitingMode();
+                }
+
+                goldFishAI.setPriority(chosenPriority);
+                System.out.println(goldFishAI.getPriority());
+
             }
-
         }else{
-
-            if(goldFishAI.getState() == Thread.State.WAITING){
-                goldFishAI.toogleWaitingMode();
-            }
-
-            goldFishAI.setPriority(chosenPriority);
-            System.out.println(goldFishAI.getPriority());
-
+            goldAIPriority = chosenPriority;
         }
     }
 
     public synchronized void setGuppiePriority(int chosenPriority){
-        if(chosenPriority == 0){
 
-            if(!(guppieAI.getState() == Thread.State.WAITING)) {
-                guppieAI.toogleWaitingMode();
+        if(guppieAI != null) {
+
+            if (chosenPriority == 0) {
+
+                if (!(guppieAI.getState() == Thread.State.WAITING)) {
+                    guppieAI.toogleWaitingMode();
+                }
+
+            } else {
+
+                if (guppieAI.getState() == Thread.State.WAITING) {
+                    guppieAI.toogleWaitingMode();
+                }
+
+                guppieAI.setPriority(chosenPriority);
+                System.out.println(guppieAI.getPriority());
+
             }
-
         }else{
-
-            if(guppieAI.getState() == Thread.State.WAITING){
-                guppieAI.toogleWaitingMode();
-            }
-
-            guppieAI.setPriority(chosenPriority);
-            System.out.println(guppieAI.getPriority());
-
+            guppieAIPriority = chosenPriority;
         }
     }
 
@@ -268,6 +359,7 @@ public class Habitat extends JPanel {
                 bornTime.remove(entId);
                 entitiesID.remove(entId);
                 entities.remove(ent);
+
     }
 
     private void initAI(){
@@ -278,7 +370,7 @@ public class Habitat extends JPanel {
         ArrayList<Object> data1 = new ArrayList<>();
 
         data1.add(this.getWidth());
-        data1.add(new HashMap<Integer, Boolean>());
+        data1.add(goldfishDirectionMap);
         data1.add(new Date().getTime());
         data1.add(entitiesID);
 
@@ -355,7 +447,7 @@ public class Habitat extends JPanel {
         ArrayList<Object> data2 = new ArrayList<>();
 
         data2.add(this.getHeight());
-        data2.add(new HashMap<Integer, Boolean>());
+        data2.add(guppieDirectionMap);
         data2.add(new Date().getTime());
         data2.add(entitiesID);
         guppieAI = new BaseAI(entities, 20, data2) {
@@ -431,6 +523,15 @@ public class Habitat extends JPanel {
         guppieAI.start();
         goldFishAI.start();
 
+        if(guppieAIPriority != 0)
+            guppieAI.setPriority(guppieAIPriority);
+        else
+            guppieAI.toogleWaitingMode();
+
+        if(goldAIPriority != 0)
+            goldFishAI.setPriority(goldAIPriority);
+        else
+            goldFishAI.toogleWaitingMode();
 
     }
 

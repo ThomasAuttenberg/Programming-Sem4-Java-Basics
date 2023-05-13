@@ -1,5 +1,6 @@
 package Models;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 
@@ -16,13 +17,13 @@ import java.util.HashMap;
  */
 
 
-public class StatisticsManager {
+public class StatisticsManager implements Serializable {
     public InstancesCounter instancesCounter;
     {
         instancesCounter = new InstancesCounter();
     }
 
-    public class InstancesCounter{
+    public class InstancesCounter implements Serializable{
         private HashMap<Class, Integer> instancesCounter;
         {
             instancesCounter = new HashMap<Class, Integer>();

@@ -25,7 +25,7 @@ public class WindowView extends JFrame {
     private JPanel controlPanel; // В целом возможно тоже избыточное
 
 
-
+    public int GENERATION_CHANCES_COMBOBOX_NUMBER = 11;
 
     Color fieldsColor = new Color(134, 134, 134);
     Color bgColor = new Color(54, 54, 54);
@@ -54,6 +54,10 @@ public class WindowView extends JFrame {
     public JMenuBar menuBar;                   // главное меня  с дублированием пользовательского интерфейса
     // вкладка и вложеные вкладки главного
     public JMenu main;                        // главное содержит в себе запуск и остановку
+    public JMenuItem consoleItem;
+    public JMenuItem saveSettingsItem;
+    public JMenuItem saveHabitatItem;
+    public JMenuItem loadHabitatItem;
     public JMenuItem startItem;                // кнопка главного меню старт симуляции
     public JMenuItem stopItem ;                // кнопка главного меню остановка симуляции
     // вкладка и вложенные вкладки статитстики
@@ -121,12 +125,21 @@ public class WindowView extends JFrame {
         startItem = new JMenuItem("Start");
         startItem.setToolTipText("Click start to run");
         stopItem = new JMenuItem("Stop");
+        consoleItem = new JMenuItem("Console");
         stopItem.setToolTipText("Click stop to finish");
         startItem.setEnabled(true);
         stopItem.setEnabled(false);
+        saveSettingsItem = new JMenuItem("Save conf.");
+        saveSettingsItem.setToolTipText("This button sets current settings as a default configuration");
+        saveHabitatItem = new JMenuItem("Save habitat");
+        loadHabitatItem = new JMenuItem("Load habitat");
         main.add(startItem);
-        main.addSeparator();
         main.add(stopItem);
+        main.addSeparator();
+        main.add(consoleItem);
+        main.add(saveSettingsItem);
+        main.add(saveHabitatItem);
+        main.add(loadHabitatItem);
         // вкладка Info
         info = new JMenu("Info");               // статистика
         ItemInfoActive = new JMenuItem("Active");
@@ -143,10 +156,14 @@ public class WindowView extends JFrame {
         ItemActiveDialog.setToolTipText("Click -Active/Deactive Dialog- to show/hide the statistics dialog");
         ItemActiveDialog.setSelected(false);
         control.add(ItemActiveDialog);
+
         // Добавление вкладок в меню
         menuBar.add(main);
         menuBar.add(info);
         menuBar.add(control);
+
+        menuBar.setBorderPainted(false);
+
         this.setJMenuBar(menuBar);
     }
 

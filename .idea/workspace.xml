@@ -4,23 +4,39 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="db3a6a04-ec4c-45b1-9e10-2b3c5bab2b95" name="Changes" comment="Lab4: undone: synchronization">
+    <list default="true" id="db3a6a04-ec4c-45b1-9e10-2b3c5bab2b95" name="Changes" comment="Lab4">
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Controllers/ConsoleController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Models/ConsoleModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Views/Console.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Views/FilePicker.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Controllers/WindowController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Controllers/WindowController$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Controllers/WindowController$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Controllers/WindowController$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Controllers/WindowController$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Controllers/WindowController$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Controllers/WindowController$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Controllers/WindowController$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Controllers/WindowController$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Controllers/WindowController$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Controllers/WindowController$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Controllers/WindowController$6.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Controllers/WindowController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Controllers/WindowController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Models/Entities/Entity.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Models/Entities/Entity.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Models/Entities/GoldFish.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Models/Entities/GoldFish.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Models/Entities/Guppie.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Models/Entities/Guppie.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Models/Habitat.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Models/Habitat.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Models/Interfaces/IBehaivor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Models/Interfaces/IBehaivor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Models/StatisticsManager$InstancesCounter.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Models/StatisticsManager$InstancesCounter.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Models/StatisticsManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Models/StatisticsManager.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Models/WindowModel$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Models/WindowModel$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Models/WindowModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Models/WindowModel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Views/WindowView.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Java_Basics__GUI/Views/WindowView.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controllers/WindowController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controllers/WindowController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Models/BaseAI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/BaseAI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Models/Entities/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Entities/Entity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Models/Entities/GoldFish.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Entities/GoldFish.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Models/Entities/Guppie.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Entities/Guppie.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Models/Habitat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Habitat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Models/Interfaces/IBehaivor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Interfaces/IBehaivor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Models/StatisticsManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/StatisticsManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Models/WindowModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/WindowModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/ListObjectsWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Views/ListObjectsWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Views/OnStopDialogWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Views/OnStopDialogWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Views/StatisticsLabel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Views/StatisticsLabel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Views/WindowView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Views/WindowView.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -105,7 +121,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683133415994</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Lab4">
+      <created>1683213514747</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1683213514747</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -119,7 +142,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="lab" />
+                        <option value="origin/lab" />
                       </list>
                     </value>
                   </entry>
@@ -136,6 +159,7 @@
     <MESSAGE value="Lab2 Prefinal version.&#10;Undo: мелкие правки" />
     <MESSAGE value="Lab3 Prefinal version.&#10;Undo: мелкие правки" />
     <MESSAGE value="Lab4: undone: synchronization" />
-    <option name="LAST_COMMIT_MESSAGE" value="Lab4: undone: synchronization" />
+    <MESSAGE value="Lab4" />
+    <option name="LAST_COMMIT_MESSAGE" value="Lab4" />
   </component>
 </project>

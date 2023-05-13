@@ -65,6 +65,7 @@ public class StatisticsLabel extends JComponent {
         Graphics2D g2d = (Graphics2D)g.create();
         g2d.setColor(Color.ORANGE);
         g2d.setFont(font);
+        //if(model.getSimulationBeginTime() != -1)
         g2d.drawString("Simulation Time: " + ((new Date()).getTime() - model.getSimulationBeginTime())/1000,xIndent,font.getSize());
         // Если установлен статистик менеджер, рисуем полную статистику:
         if(stats != null){

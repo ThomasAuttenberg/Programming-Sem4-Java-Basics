@@ -7,11 +7,7 @@ import java.io.IOException;
 public class Guppie extends Entity {
 
     {
-        try {
-            this.setImg(ImageDataAccessor.instance.get("res/guppie.png"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+            this.setImageURL("res/guppie.png");
     }
     public Guppie(int width, int height){
         super(width,height);

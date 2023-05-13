@@ -21,7 +21,7 @@ public class OnStopDialogWindow extends JDialog {
     private JButton button_cancel;
     private JTextArea statistics;
     public OnStopDialogWindow(WindowModel model){
-        setTitle("STATISTICS");
+        setTitle("CONFIRM YOU WANT TO END THIS SIMULATION");
         setSize(400,300);
         setLocationRelativeTo(null);
         container = new JPanel();

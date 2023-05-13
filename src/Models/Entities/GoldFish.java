@@ -9,15 +9,9 @@ public class GoldFish extends Entity {
 
     {
 
-        try {
-
-            this.setImg(ImageDataAccessor.instance.get("res/goldfish.png")); // аналогично
-
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+            this.setImageURL("res/goldfish.png"); // аналогично
     }
+
     public GoldFish(int width, int height){
         super(width,height);
     } //Вызываем конструктор entity и передаем ему полученные параметры

@@ -347,7 +347,7 @@ public class WindowController {
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(file);
             objectOutputStream = new ObjectOutputStream(fileOutputStream);
-            model.getHabitat().saveState(objectOutputStream);
+            model.saveState(objectOutputStream);
             objectOutputStream.close();
             fileOutputStream.close();
         } catch (IOException ex) {

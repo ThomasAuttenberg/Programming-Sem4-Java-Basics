@@ -171,7 +171,7 @@ public class Habitat extends JPanel {
             os.writeObject(lastUpdate);
             os.writeObject(guppieDirectionMap);
             os.writeObject(goldfishDirectionMap);
-            os.writeObject(stats);
+            //os.writeObject(stats);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -202,7 +202,8 @@ public class Habitat extends JPanel {
             lastUpdate = (HashMap<Entity, Long>) is.readObject();
             guppieDirectionMap = (HashMap<Integer, Boolean>) is.readObject();
             goldfishDirectionMap = (HashMap<Integer, Boolean>) is.readObject();
-            stats = (StatisticsManager) is.readObject();
+            //stats = (StatisticsManager) is.readObject();
+           // System.out.println("Meow: "+ stats.instancesCounter.getNumberOf(GoldFish.class));
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -211,6 +212,7 @@ public class Habitat extends JPanel {
 
         this.revalidate();
         this.repaint();
+        System.out.println("Meow: "+ stats.instancesCounter.getNumberOf(GoldFish.class));
     }
 
 

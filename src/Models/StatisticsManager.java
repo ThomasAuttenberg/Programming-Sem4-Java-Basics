@@ -19,6 +19,7 @@ import java.util.HashMap;
 
 public class StatisticsManager implements Serializable {
     public InstancesCounter instancesCounter;
+
     {
         instancesCounter = new InstancesCounter();
     }

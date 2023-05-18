@@ -5,7 +5,9 @@ import Models.Entities.Guppie;
 
 
 import javax.swing.*;
+import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Date;
 import java.util.TimerTask;
 import java.util.Timer;
@@ -66,7 +68,25 @@ public class WindowModel {
 
     public void loadState(ObjectInputStream objectInputStream){
         habitat.loadState(objectInputStream);
+
+        try {
+            stats = (StatisticsManager) objectInputStream.readObject();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
         loadedState = true;
+    }
+
+    public void saveState(ObjectOutputStream objectOutputStream){
+        habitat.saveState(objectOutputStream);
+        try {
+            objectOutputStream.writeObject(stats);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
@@ -90,6 +110,7 @@ public class WindowModel {
         simulationBeginTime += new Date().getTime() - lastTimerTick;
         createTimer();
     }
+
 
     private void createTimer(){ // Запуск таймера
         timer = new Timer();
